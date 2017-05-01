@@ -35,8 +35,23 @@ namespace GiantSDK.Voice
 	}
 
 
-	public class GiantVoiceManager : GiantVoiceSingletonForMono<GiantVoiceManager>,IGiantVoice
+	public class GiantVoiceManager// : GiantVoiceSingletonForMono<GiantVoiceManager>,IGiantVoice
 	{
+        public static GiantVoiceManager _instance = null;
+        public static GiantVoiceManager Instance
+        {
+            get
+            {
+                if (null == _instance)
+                {
+                    _instance = new GiantVoiceManager();
+                }
+
+                return _instance;
+            }
+        }
+
+
 		#if UNITY_STANDALONE_WIN || UNITY_EDITOR
 
 		public const string LibName = "rtchatsdk";
@@ -61,55 +76,10 @@ namespace GiantSDK.Voice
 		public static event PlayFinishCompleteHandler OnPlayOverComplete;
 
 
-		#region DllImport
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int initSDK (string appId, string appKey);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool setParams (string voiceUploadUrl, string xunfeiAppID);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int setUserInfo (string username, string userkey);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern void registerMsgCallback (SdkCallBackDelegate func);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int requestJoinPlatformRoom (string roomid);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int requestLeavePlatformRoom ();
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int adjustSpeakerVolume (float volume);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern int setLoudSpeaker (bool enable);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern void setSendVoice (bool isSend);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool startRecordVoice (bool needConvertWord);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool stopRecordVoice ();
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool cancelRecordedVoice ();
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool startPlayLocalVoice (string voiceUrl);
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool stopPlayLocalVoice ();
-
-		[DllImport (LibName, CallingConvention = CallingConvention.Cdecl)]
-		private static extern  void customRoomServerAddr (string customUrl);
-
-		#endregion
-
+	    public void TestInvokeJar()
+        {
+            Debug.LogError("TestInvokeJar");
+        }
 
 		public  void InitGASDK (string appId, string appKey, string  userName, string serverUrl, string xfid,string customip)
 		{
@@ -122,16 +92,6 @@ namespace GiantSDK.Voice
 
 			#endif
 
-			registerMsgCallback (SdkCallBackFunc);
-
-			initSDK (appId, appKey);
-
-			setParams (serverUrl, xfid);			
-			setUserInfo(userName,"");
-			
-			if(!string.IsNullOrEmpty(customip)){
-				customRoomServerAddr(customip);
-			}
 			
 			#endif
 		}
@@ -140,7 +100,7 @@ namespace GiantSDK.Voice
 		{
 			#if RTCHAT_ENABLE
 				
-				requestJoinPlatformRoom (roomId);
+				//requestJoinPlatformRoom (roomId);
 			
 			#endif
 		}
@@ -148,7 +108,7 @@ namespace GiantSDK.Voice
 		public   void QuitRoom ()
 		{
 			#if RTCHAT_ENABLE
-			requestLeavePlatformRoom ();
+			//requestLeavePlatformRoom ();
 			#endif
 
 		}
@@ -157,7 +117,7 @@ namespace GiantSDK.Voice
 		{
 			#if RTCHAT_ENABLE
 
-			setLoudSpeaker (true);
+			//setLoudSpeaker (true);
 
 			#endif	
 		}
@@ -166,7 +126,7 @@ namespace GiantSDK.Voice
 		{
 			#if RTCHAT_ENABLE
 
-			setLoudSpeaker (false);
+			//setLoudSpeaker (false);
 
 			#endif	
 		}
@@ -174,7 +134,7 @@ namespace GiantSDK.Voice
 		public   void SpeakerVolum (float volume)
 		{
 			#if RTCHAT_ENABLE
-			adjustSpeakerVolume (volume);
+			//adjustSpeakerVolume (volume);
 
 			#endif
 		}
@@ -183,7 +143,7 @@ namespace GiantSDK.Voice
 		{
 			#if RTCHAT_ENABLE
 
-			setSendVoice (true);
+			//setSendVoice (true);
 			#endif
 		}
 
@@ -191,77 +151,77 @@ namespace GiantSDK.Voice
 		{
 			#if RTCHAT_ENABLE
      	
-			setSendVoice (false);
+			//setSendVoice (false);
 
 			#endif
 		}
 
 		public   void StartRecordVoice (bool needConvertWord)
 		{
-			#if RTCHAT_ENABLE
-			bool isstart =	startRecordVoice (needConvertWord);
-			Debug.Log (" c# 开始录制 ：" + isstart);
-			#endif
+            //#if RTCHAT_ENABLE
+            //bool isstart =	startRecordVoice (needConvertWord);
+            //Debug.Log (" c# 开始录制 ：" + isstart);
+            //#endif
 		}
 
 		public   void StopRecordVoice ()
 		{
-			#if RTCHAT_ENABLE
-			bool isstop =	stopRecordVoice ();
-			Debug.Log (" c# 停止录制 ：" + isstop);
+            //#if RTCHAT_ENABLE
+            //bool isstop =	stopRecordVoice ();
+            //Debug.Log (" c# 停止录制 ：" + isstop);
 
-			#endif
+            //#endif
 
 		}
 
 		public   void StartPlayVoice (string voiceUrl)
-		{
-			#if RTCHAT_ENABLE
-			bool isstartPlayLocal = startPlayLocalVoice (voiceUrl);
-			Debug.Log (" c# 开始播放本地 ：" + isstartPlayLocal);
-			#endif
+        {
+        //    #if RTCHAT_ENABLE
+        //    bool isstartPlayLocal = startPlayLocalVoice (voiceUrl);
+        //    Debug.Log (" c# 开始播放本地 ：" + isstartPlayLocal);
+        //    #endif
 
 		}
 
 		public   void StopPlayVoice ()
 		{
-			#if RTCHAT_ENABLE
+            //#if RTCHAT_ENABLE
 
-			bool isstopPlay = stopPlayLocalVoice ();
-			Debug.Log (" c# 停止播放本地 ：" + isstopPlay);
+            //bool isstopPlay = stopPlayLocalVoice ();
+            //Debug.Log (" c# 停止播放本地 ：" + isstopPlay);
 
-			#endif
+            //#endif
 
 
 		}
 		//取消录音
 		public   void CancelRecordVoice ()
 		{
-			#if RTCHAT_ENABLE
+            //#if RTCHAT_ENABLE
 
-			bool iscancelVoice = cancelRecordedVoice ();
-			Debug.Log (" c# 取消录音 ：" + iscancelVoice);
+            //bool iscancelVoice = cancelRecordedVoice ();
+            //Debug.Log (" c# 取消录音 ：" + iscancelVoice);
 
-			#endif
+            //#endif
 
 		}
 		//改变语音聊天登录用户信息
 		public   void SetUserInfo (string username, string userkey)
 		{
-			#if RTCHAT_ENABLE
-			int userinfo = setUserInfo (username, userkey);
-			Debug.Log (" c# setuserinfo ：" + userinfo);
-			#endif
+            //#if RTCHAT_ENABLE
+            //int userinfo = setUserInfo (username, userkey);
+            //Debug.Log (" c# setuserinfo ：" + userinfo);
+            //#endif
 
 		}
 
 		public   void CustomRoomServer (string urlserver)
 		{
-			#if RTCHAT_ENABLE
+            //#if RTCHAT_ENABLE
 
-			customRoomServerAddr (urlserver);
+            //customRoomServerAddr (urlserver);
 
-			#endif
+            //#endif
 		}
 
 		[MonoPInvokeCallback (typeof(SdkCallBackDelegate))]
