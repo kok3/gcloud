@@ -17,7 +17,7 @@ public class AudioServer implements Runnable {
 	int myport = 5656;
 
 	// *****this is client IP**** ///////////
-	String clientIpStr = "192.168.1.102";
+	String clientIpStr = "192.168.94.174";
 	InetAddress clientIp;
 	int clientPort = 5757;
 
