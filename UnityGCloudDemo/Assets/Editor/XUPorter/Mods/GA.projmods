@@ -1,0 +1,38 @@
+{
+    "group": "AOC",
+    "libs": [
+    			"libsqlite3.dylib",
+				"libz.dylib" 
+    		],
+    "frameworks": [
+						"StoreKit.framework",
+						"MessageUI.framework",
+						"EventKitUI.framework",
+						"EventKit.framework",
+						"iAd.framework",
+						"AdSupport.framework",
+						"SystemConfiguration.framework",
+    					"Security.framework",
+						"CoreTelephony.framework",
+						"CFNetwork.framework",
+						"CoreImage.framework",
+						"AdSupport.framework",
+						"AddressBook.framework",
+						"AssetsLibrary.framework",
+						"Contacts.framework",
+
+    			  ],
+    "headerpaths": [],
+    "files":   [
+
+    			],
+    "folders": [
+	"../SDK/MyCloud"
+	],    
+    "excludes": ["^.*.meta$", "^.*.mdown$", "^.*.pdf$"],
+    "compiler_flags": [],
+    "linker_flags": [
+    					"-ObjC"
+    				]
+
+}
