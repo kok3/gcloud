@@ -8,9 +8,27 @@ namespace UnityEditor.XCodeEditor
 	{
 		protected string MAINGROUP_KEY = "mainGroup";
 		protected string KNOWN_REGIONS_KEY = "knownRegions";
+		protected string TARGETS_KEY = "targets";
+		protected string ATTRIBUTES_KEY = "attributes";
 
 		protected bool _clearedLoc = false;
 
+		public PBXList targets
+		{
+			get
+			{
+				return (PBXList)_data [TARGETS_KEY];
+			}
+		}
+
+		public PBXDictionary attributes
+		{
+			get
+			{
+				return (PBXDictionary)_data [ATTRIBUTES_KEY];
+			}
+		}
+		
 		public PBXProject() : base() {
 		}
 		

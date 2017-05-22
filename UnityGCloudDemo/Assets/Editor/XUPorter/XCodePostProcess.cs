@@ -36,6 +36,34 @@ public static class XCodePostProcess
 		project.overwriteBuildSetting("ENABLE_BITCODE", "NO", "ReleaseForProfiling");
 		project.overwriteBuildSetting("ENABLE_BITCODE", "NO", "ReleaseForRunning");
 
+
+		var pbxproj = project.project;
+
+		var attrs = pbxproj.attributes;
+		var targetAttrs = (PBXDictionary)attrs["TargetAttributes"];
+		PBXDictionary targetSetting = new PBXDictionary ();
+
+		targetSetting["ProvisioningStyle"] = "Manual";
+		//targetSetting["DevelopmentTeam"] = "YourTeamID(Optional)";
+
+		var targets = pbxproj.targets;
+		foreach (var t in targets)
+		{
+			var targetID = (string)t;
+			if (!targetAttrs.ContainsKey (targetID))
+			{
+
+				var TargetAttr = (PBXDictionary)targetAttrs [targetID];
+				TargetAttr.Append (targetSetting);
+			}
+			else
+			{
+				targetAttrs [targetID] = targetSetting;
+
+			}
+
+		}
+		
 		//TODO implement generic settings as a module option
 //		project.overwriteBuildSetting("CODE_SIGN_IDENTITY[sdk=iphoneos*]", "iPhone Distribution", "Release");
 		
