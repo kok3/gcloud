@@ -37,8 +37,9 @@ public class UITestSund : MonoBehaviour {
 
     private static AndroidJavaClass androidJavaClass = null;
     protected AndroidJavaObject gCloudJavaObject = null;
+	public AndroidJavaClass channelClass = null;
 
-    //public GameObject Text;
+    //public GameObject Text;s
     public Text tipText;
 
 
@@ -151,12 +152,30 @@ public class UITestSund : MonoBehaviour {
 
     public void onQuit()
     {
-        Application.Quit();
-    }
+		AndroidJavaClass context = new AndroidJavaClass ("com.unity3d.player.UnityPlayer");
+		AndroidJavaObject obj = context.GetStatic<AndroidJavaObject>("currentActivity") ;
+		if (context != null && obj != null) {
+			tipText.text = channelClass.CallStatic<string> ("getChannel", obj);
+			Debug.Log ("@@@" + tipText.text);
+		} else {
+			Debug.Log ("@@@ error");
+			tipText.text = "Error";
+		}
+	}
+        //Application.Quit();
+   
 	// Use this for initialization
 	void Start () {
-        
+		Debug.Log ("@@@ Start");
+
+		channelClass = new AndroidJavaClass ("com.czt.util.ChannelUtil");
+
+		if (channelClass != null)
+			Debug.Log ("@@@ channelClass OK!");
+		else
+			Debug.Log ("@@@ channelClass Wrong!");
 	}
+
 	
 	// Update is called once per frame
 	void Update () {
